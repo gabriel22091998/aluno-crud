@@ -206,7 +206,7 @@ Campos do aluno: `idAluno`, `nome`, `matricula`, `cpf` e `data_admissao` (autom�
 
 ## 👤 Autor
 
-Desenvolvido por **COTI Informática** — projeto de estudo de CRUD em Java com JDBC e PostgreSQL.
+Desenvolvido por **gabriel22091998** — projeto de estudo de CRUD em Java com JDBC e PostgreSQL.
 
 ---
 
