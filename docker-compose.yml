@@ -1,0 +1,50 @@
+name: aluno-crud
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: aluno-crud-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bd-alunos
+      POSTGRES_USER: coti
+      POSTGRES_PASSWORD: coti
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - aluno-crud-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coti -d bd-alunos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: aluno-crud-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: coti@email.com
+      PGADMIN_DEFAULT_PASSWORD: Coti@2026
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - aluno-crud-net
+
+volumes:
+  postgres_data:
+    name: aluno-crud-postgres-data
+  pgadmin_data:
+    name: aluno-crud-pgadmin-data
+
+networks:
+  aluno-crud-net:
+    name: aluno-crud-net
+    driver: bridge
